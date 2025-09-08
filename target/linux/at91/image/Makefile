@@ -1,9 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
 # Copyright (C) 2006-2013 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
@@ -21,11 +19,11 @@ FAT32_BLOCKS:=$(shell echo \
   $$(($(AT91_SD_BOOT_PARTSIZE)*1024*1024/$(FAT32_BLOCK_SIZE))))
 
 define Device/Default
+  DEVICE_DTS_DIR := $(DTS_DIR)/microchip
   $(Device/default-nand)
   PROFILES := Default
   FILESYSTEMS := squashfs ubifs ext4
   DEVICE_DTS = $(lastword $(subst _, ,$(1)))
-  SUPPORTED_DEVICES := $(subst _,$(comma),$(1))
   KERNEL_NAME := zImage
   KERNEL_SIZE := 4096k
   KERNEL := kernel-bin | append-dtb | lzma | uImage lzma
